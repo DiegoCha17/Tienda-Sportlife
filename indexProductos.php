@@ -1,0 +1,172 @@
+<?php require_once "Conexionbd.php"; ?>
+<?php session_start(); ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los Productos - SportLife</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="estilos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#22C55E',
+                        secondary: '#3B82F6',
+                        dark: '#1E3A8A',
+                        light: '#FFFFFF',
+                        lightGreen: '#D1FAE5',
+                        darkGreen: '#16A34A',
+                        lightBlue: '#BFDBFE',
+                        darkBlue: '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="productos-page font-inter antialiased">
+
+    <!-- Encabezado (Header) -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex justify-between items-center rounded-b-xl">
+        <div class="flex items-center">
+            <a href="Index.php" class="text-2xl font-bold text-dark flex items-center">
+                <span class="text-primary mr-2 text-3xl">🏃‍♂️</span> SportLife
+            </a>
+        </div>
+        
+        <!-- Navegación Principal (Escritorio) -->
+        <nav class="hidden md:flex space-x-8">
+            <a href="Index.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Inicio</a>
+            <a href="indexProductos.php" class="text-primary font-semibold transition-colors duration-300">Todos</a>
+            <a href="indexRopa.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Ropa</a>
+            <a href="indexCalzado.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Calzado</a>
+            <a href="indexAccesorios.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Accesorios</a>
+            <a href="indexGym.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Gym</a>
+            <a href="indexSuplementos.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Suplementos</a>
+        </nav>
+        
+        <!-- Iconos de Usuario y Carrito -->
+        <div class="flex items-center space-x-4">
+            <!-- Icono de usuario con enlace al login/registro -->
+            <?php if(isset($_SESSION['correo'])): ?>
+                <a href="logout.php" class="p-2 rounded-full hover:bg-lightGreen transition-colors duration-300">
+                    <i class="fa-solid fa-right-from-bracket fa-icon"></i>
+                </a>
+            <?php else: ?>
+                <a href="auth.html" class="p-2 rounded-full hover:bg-lightGreen transition-colors duration-300">
+                    <i class="fa-solid fa-user fa-icon"></i>
+                </a>
+            <?php endif; ?>
+            
+            <!-- Icono de carrito -->
+            <a href="Carritos.php" class="p-2 rounded-full hover:bg-lightGreen transition-colors duration-300 relative">
+                <i class="fa-solid fa-cart-shopping fa-icon"></i>
+                <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center" id="cartCount">0</span>
+            </a>
+            
+            <!-- Botón de Menú Móvil -->
+            <button class="md:hidden p-2 rounded-full hover:bg-lightGreen transition-colors duration-300" id="mobile-menu-button">
+                <i class="fa-solid fa-bars fa-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Menú Móvil (Oculto por defecto) -->
+    <nav id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-4 rounded-b-xl mx-4">
+        <ul class="flex flex-col items-center space-y-4">
+            <li><a href="Index.php" class="block text-dark hover:text-primary transition-colors duration-300 font-medium text-lg">Inicio</a></li>
+            <li><a href="indexProductos.php" class="block text-primary font-semibold transition-colors duration-300 text-lg">Todos</a></li>
+            <li><a href="indexRopa.php" class="block text-dark hover:text-primary transition-colors duration-300 font-medium text-lg">Ropa</a></li>
+            <li><a href="indexCalzado.php" class="block text-dark hover:text-primary transition-colors duration-300 font-medium text-lg">Calzado</a></li>
+            <li><a href="indexAccesorios.php" class="block text-dark hover:text-primary transition-colors duration-300 font-medium text-lg">Accesorios</a></li>
+            <li><a href="indexGym.php" class="block text-dark hover:text-primary transition-colors duration-300 font-medium text-lg">Gym</a></li>
+            <li><a href="indexSuplementos.php" class="block text-dark hover:text-primary transition-colors duration-300 font-medium text-lg">Suplementos</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <div class="page-title">
+            <h1><i class="fas fa-boxes"></i> Todos los Productos</h1>
+            <p>Explora nuestro catálogo completo de productos deportivos. Desde ropa y calzado hasta suplementos y accesorios para gimnasio.</p>
+        </div>
+
+        
+        <div class="filters-container mb-6" style="display: none;">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="filterByCategory('all')" class="filter-btn active">Todos</button>
+                <button onclick="filterByCategory('1')" class="filter-btn">Ropa</button>
+                <button onclick="filterByCategory('2')" class="filter-btn">Calzado</button>
+                <button onclick="filterByCategory('3')" class="filter-btn">Accesorios</button>
+                <button onclick="filterByCategory('4')" class="filter-btn">Suplementos</button>
+                <button onclick="filterByCategory('5')" class="filter-btn">Gym</button>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <h3>Cargando productos...</h3>
+                <p>Por favor espera un momento</p>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="carrito.js"></script>
+    <script src="productos.js"></script>
+    
+    
+    <script>
+        /*
+          MENÚ MÓVIL
+         */
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        /*
+         BÚSQUEDA 
+         */
+        function configurarBusqueda() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    productos.buscar(e.target.value);
+                });
+            }
+        }
+
+        /*
+         INICIALIZACIÓN ESPECÍFICA DE PRODUCTOS
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Inicializando página de TODOS los productos...');
+            
+           
+            setTimeout(() => {
+                if (typeof productos !== 'undefined') {
+                    productos.cargarTodos();
+                    configurarBusqueda();
+                } else {
+                    console.error('❌ Sistema de productos no disponible');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

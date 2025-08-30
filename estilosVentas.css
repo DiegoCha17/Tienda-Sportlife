@@ -1,0 +1,207 @@
+/* =================== VENTAS PAGE =================== */
+body.ventas-page{
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background: #F8F8F8;
+  color:#1E3A8A;
+  min-height:100vh;
+}
+
+/* Hero */
+.ventas-hero{
+  background: linear-gradient(135deg,#22C55E 0%,#3B82F6 100%);
+  color:#fff;
+  padding:2.2rem 0;
+  box-shadow:0 8px 30px rgba(59,130,246,.25);
+  position:relative; overflow:hidden;
+}
+.ventas-hero::before{
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  animation: shimmer 3s infinite;
+}
+.ventas-hero h1{
+  font-size:2.2rem; font-weight:800; letter-spacing:.2px; margin:0;
+  display:flex; align-items:center; gap:.6rem;
+}
+.ventas-hero .breadcrumb-mini{ color:rgba(255,255,255,.92); margin-bottom:.4rem }
+
+/* Contenedor */
+.ventas-container{ max-width:1200px; margin:0 auto; padding:2.2rem 2rem }
+
+/* Barra de controles (buscador / filtros / acciones) */
+.ventas-controls{
+  background:#fff;
+  border-radius:18px;
+  padding:1.2rem;
+  display:grid; grid-template-columns: 1fr auto auto;
+  gap:1rem; align-items:center;
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
+  border:1px solid rgba(30,58,138,.06);
+}
+@media (max-width: 900px){
+  .ventas-controls{ grid-template-columns:1fr; }
+}
+.control-search{
+  position:relative;
+}
+.control-search input{
+  width:100%; height:46px; border-radius:12px; border:2px solid #e5e7eb;
+  padding:0 46px 0 15px; font-size:15px; outline:none;
+  transition:border-color .2s, box-shadow .2s;
+  background:#fff;
+}
+.control-search input:focus{
+  border-color:#3B82F6; box-shadow:0 0 0 3px rgba(59,130,246,.15);
+}
+.control-search i{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#6b7280;
+}
+.control-select, .control-range{
+  display:flex; gap:.6rem; align-items:center;
+}
+.control-select select, .control-range input{
+  height:44px; border-radius:12px; border:2px solid #e5e7eb; background:#fff;
+  padding:0 .8rem; font-size:14px; min-width:160px;
+}
+.control-actions{ display:flex; gap:.6rem; flex-wrap:wrap }
+.btn{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.75rem 1rem; border-radius:12px; border:0; cursor:pointer;
+  font-weight:700; text-decoration:none; transition:transform .06s, filter .2s, box-shadow .2s;
+}
+.btn:active{ transform: translateY(1px) }
+.btn-primary{
+  background: linear-gradient(135deg,#22C55E,#16A34A);
+  color:#07131f; box-shadow:0 10px 24px rgba(34,197,94,.28);
+}
+.btn-primary:hover{ filter:saturate(1.06) }
+.btn-outline{
+  background:#fff; color:#1E3A8A; border:2px solid #e5e7eb;
+}
+.btn-outline:hover{ background:#f8fafc }
+
+/* Tabla de ventas */
+.ventas-table-wrap{
+  margin-top:1.4rem;
+  background:#fff; border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+  border:1px solid rgba(30,58,138,.06);
+  overflow:auto;
+}
+.ventas-table{
+  width:100%; border-collapse:separate; border-spacing:0;
+  min-width:900px;
+}
+.ventas-table thead th{
+  position:sticky; top:0; z-index:1;
+  background: linear-gradient(180deg,#f9fafb,#f3f4f6);
+  color:#1E3A8A; text-align:left; font-weight:800; font-size:.92rem;
+  padding:14px 16px; border-bottom:1px solid #e5e7eb;
+}
+.ventas-table tbody td{
+  padding:14px 16px; border-bottom:1px solid #eef2f7; color:#374151; font-weight:600;
+}
+.ventas-table tbody tr:hover{
+  background:#f9fafb;
+}
+.td-importe{ color:#16A34A; font-weight:900 }
+.td-fecha{ color:#64748b; font-weight:700 }
+.td-id{ color:#475569; font-weight:800 }
+
+/* Badges de estado */
+.badge{
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.35rem .6rem; border-radius:999px; font-size:.8rem; font-weight:800;
+  border:1px solid transparent;
+}
+.badge-pagado{
+  background: rgba(34,197,94,.12); color:#16A34A; border-color:rgba(34,197,94,.28);
+}
+.badge-pendiente{
+  background: rgba(245,158,11,.12); color:#D97706; border-color:rgba(245,158,11,.28);
+}
+.badge-anulado{
+  background: rgba(239,68,68,.12); color:#DC2626; border-color:rgba(239,68,68,.28);
+}
+
+/* Acciones por fila */
+.row-actions{ display:flex; gap:.4rem }
+.btn-icon{
+  width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:12px; border:1px solid #e5e7eb; background:#fff; color:#1E3A8A;
+}
+.btn-icon:hover{ background:#f8fafc }
+.btn-icon--danger{ color:#DC2626; border-color:rgba(239,68,68,.25) }
+.btn-icon--primary{ color:#2563EB; border-color:rgba(37,99,235,.25) }
+
+/* Estado vacío */
+.ventas-empty{
+  text-align:center; padding:3rem 1rem; color:#1E3A8A;
+  background:#fff; border-radius:18px; border:1px dashed #cbd5e1; margin-top:1rem;
+}
+.ventas-empty i{ font-size:44px; color:#22C55E; opacity:.9; margin-bottom:.2rem }
+
+/* Paginación */
+.ventas-pagination{
+  display:flex; justify-content:center; align-items:center; gap:.5rem;
+  margin-top:1rem; flex-wrap:wrap;
+}
+.page-btn{
+  min-width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:10px; border:1px solid #e5e7eb; background:#fff; color:#1E3A8A; font-weight:800;
+}
+.page-btn.active{
+  background:linear-gradient(135deg,#3B82F6,#2563EB); color:#fff; border-color:transparent;
+  box-shadow:0 8px 22px rgba(59,130,246,.30);
+}
+
+/* Tarjeta responsiva para móviles (se muestra si ocultas tabla con CSS/JS) */
+.venta-card{
+  display:grid; gap:.4rem; padding:1rem; border:1px solid #e5e7eb; border-radius:16px; background:#fff;
+  box-shadow:0 8px 22px rgba(0,0,0,.05);
+}
+.venta-card .venta-row{ display:flex; justify-content:space-between; gap:1rem }
+.venta-card strong{ color:#1E3A8A }
+.venta-card .importe{ color:#16A34A; font-weight:900 }
+
+/* Modal */
+.modal-ventas{
+  display:none; position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(6px);
+  padding:24px; overflow:auto;
+}
+.modal-ventas.is-open{ display:block }
+.modal-ventas__panel{
+  max-width:680px; margin:40px auto; background:#fff; border-radius:18px; overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.25);
+}
+.modal-ventas__header{
+  background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; padding:18px 20px; display:flex; justify-content:space-between; align-items:center;
+}
+.modal-ventas__body{ padding:20px }
+.modal-ventas__footer{ padding:16px 20px; background:#f8fafc; display:flex; justify-content:flex-end; gap:.6rem }
+
+/* Helpers */
+.mono{ font-family: ui-monospace,SFMono-Regular,Menlo,monospace }
+.text-muted{ color:#6b7280 !important }
+
+/* Dark mode suave opcional */
+@media (prefers-color-scheme: dark){
+  body.ventas-page{ background:#0b0f17; color:#E6EDF6 }
+  .ventas-controls, .ventas-table-wrap, .ventas-empty, .venta-card{
+    background: rgba(19,25,35,.72);
+    border-color: rgba(255,255,255,.08);
+    color:#E6EDF6;
+  }
+  .ventas-table thead th{
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    border-bottom-color: rgba(255,255,255,.10);
+    color:#E6EDF6;
+  }
+  .ventas-table tbody td{ border-bottom-color: rgba(255,255,255,.08); color:#C9D5EA }
+  .btn-outline{ background:#0f1729; color:#EAF2FF; border-color:rgba(255,255,255,.14) }
+  .control-search input, .control-select select, .control-range input{
+    background:#0f1729; border-color:rgba(255,255,255,.14); color:#EAF2FF
+  }
+}

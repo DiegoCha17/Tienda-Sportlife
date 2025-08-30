@@ -53,8 +53,8 @@
         <!-- Navegación Principal (Escritorio) -->
         <nav class="hidden md:flex space-x-8">
             <a href="Index.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Inicio</a>
-            <a href="indexProductos.html" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Todos</a>
-            <a href="indexRopa.html" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Ropa</a>
+            <a href="indexProductos.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Todos</a>
+            <a href="indexRopa.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Ropa</a>
             <a href="indexCalzado.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Calzado</a>
             <a href="indexAccesorios.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Accesorios</a>
             <a href="indexGym.php" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Gym</a>
@@ -377,4 +377,5 @@
 
 </body>
 </html>
+
 
